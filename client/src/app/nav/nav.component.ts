@@ -9,32 +9,30 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  loggedIn: any = false ;
-  model:any = {};
-  constructor(public accountService:AccountService,private router: Router, private toaster:ToastrService) { }
+  loggedIn: any = false;
+  model: any = {};
+  constructor(public accountService: AccountService, private router: Router, private toaster: ToastrService) { }
 
   ngOnInit(): void {
     this.getCurrentUser();
   }
-  login(){
+  login() {
     this.accountService.login(this.model).subscribe(res => {
       this.router.navigateByUrl("/members")
       this.loggedIn = true
-    },err=>{
-      this.toaster.error(err.error)
     })
   }
 
-  logout(){
+  logout() {
     this.accountService.logout()
     this.router.navigateByUrl("/");
   }
 
 
-  getCurrentUser(){
-    this.accountService.currentUser$.subscribe(user=>{
-        this.loggedIn = !! user
-    },error => {
+  getCurrentUser() {
+    this.accountService.currentUser$.subscribe(user => {
+      this.loggedIn = !!user
+    }, error => {
       console.log(error);
     })
   }
